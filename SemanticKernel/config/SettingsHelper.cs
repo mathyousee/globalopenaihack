@@ -8,6 +8,8 @@ public class MySettings {
     public string Type { get; set; } = "azure";
     public AzureOpenAI AzureOpenAI { get; set; } = new();
     public OpenAI OpenAI { get; set; } = new();
+    public string LanguageKey { get; set; } = string.Empty;
+    public string LanguageEndpoint { get; set; } = string.Empty;
 }
 
 public class AzureOpenAI {
@@ -32,16 +34,16 @@ public static class Settings
     /// </summary>
     public static MySettings LoadFromFile(string configFile = DefaultConfigFile)
     {
-        if (!File.Exists(DefaultConfigFile))
+        if (!File.Exists(configFile))
         {
-            Console.WriteLine($"Configuration not found: {DefaultConfigFile}");
+            Console.WriteLine($"Configuration not found: {configFile}");
             Console.WriteLine("Please create a settings.json in the config folder. See Tutorial00.");
             throw new ApplicationException("Configuration not found, please setup the notebooks first.");
         }
 
         try
         {
-            MySettings settings = JsonSerializer.Deserialize<MySettings>(File.ReadAllText(DefaultConfigFile));
+            MySettings settings = JsonSerializer.Deserialize<MySettings>(File.ReadAllText(configFile));
 
             if (string.IsNullOrWhiteSpace(settings.Type)) throw new ApplicationException("Type is not set in settings.json");
             if (settings.Type == "azure")
@@ -60,6 +62,11 @@ public static class Settings
                 if (string.IsNullOrWhiteSpace(settings.OpenAI.Model))
                     Console.WriteLine("OpenAI.Model is not set in settings.json");
             }
+
+            if (string.IsNullOrWhiteSpace(settings.LanguageKey))
+                Console.WriteLine("LanguageKey is not set in settings.json");
+            if (string.IsNullOrWhiteSpace(settings.LanguageEndpoint))
+                Console.WriteLine("LanguageEndpoint is not set in settings.json");
 
             return settings;
         }

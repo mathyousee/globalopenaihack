@@ -31,7 +31,7 @@ public class TextAnalysisPlugin
         List<string> batchInput = new List<string>() { text };
         AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput);
         await healthOperation.WaitForCompletionAsync();
-
+        
         // Serialize the response to JSON and return it as a string
 Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
 Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");

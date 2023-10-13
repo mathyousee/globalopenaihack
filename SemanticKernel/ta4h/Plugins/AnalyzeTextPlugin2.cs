@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 
 public class TextAnalysisPlugin
 {
-    [SKFunction()]
+    [SKFunction]
+    [Description("Analyze the healthcare entities in the text")]
     public async Task<string> AnalyzeHealthcareEntities(string text)
     {
         string configFile = "../config/settings.json";
@@ -50,37 +52,37 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
                 // view recognized healthcare entities
                 Console.WriteLine($"  Entity: {entity.Text}");
                 Console.WriteLine($"  Category: {entity.Category}");
-                Console.WriteLine($"  Offset: {entity.Offset}");
-                Console.WriteLine($"  Length: {entity.Length}");
-                Console.WriteLine($"  NormalizedText: {entity.NormalizedText}");
-                Console.WriteLine($"  Links:");
+                //Console.WriteLine($"  Offset: {entity.Offset}");
+                //Console.WriteLine($"  Length: {entity.Length}");
+                //Console.WriteLine($"  NormalizedText: {entity.NormalizedText}");
+                //Console.WriteLine($"  Links:");
 
                 // view entity data sources
-                foreach (EntityDataSource entityDataSource in entity.DataSources)
-                {
-                    Console.WriteLine($"    Entity ID in Data Source: {entityDataSource.EntityId}");
-                    Console.WriteLine($"    DataSource: {entityDataSource.Name}");
-                }
+                //foreach (EntityDataSource entityDataSource in entity.DataSources)
+                //{
+                //    Console.WriteLine($"    Entity ID in Data Source: {entityDataSource.EntityId}");
+                //    Console.WriteLine($"    DataSource: {entityDataSource.Name}");
+                //}
 
                 // view assertion
-                if (entity.Assertion != null)
-                {
-                    Console.WriteLine($"  Assertions:");
-
-                    if (entity.Assertion?.Association != null)
-                    {
-                        Console.WriteLine($"    Association: {entity.Assertion?.Association}");
-                    }
-
-                    if (entity.Assertion?.Certainty != null)
-                    {
-                        Console.WriteLine($"    Certainty: {entity.Assertion?.Certainty}");
-                    }
-                    if (entity.Assertion?.Conditionality != null)
-                    {
-                        Console.WriteLine($"    Conditionality: {entity.Assertion?.Conditionality}");
-                    }
-                }
+                //if (entity.Assertion != null)
+                //{
+                //    Console.WriteLine($"  Assertions:");
+//
+                //    if (entity.Assertion?.Association != null)
+                //    {
+                //        Console.WriteLine($"    Association: {entity.Assertion?.Association}");
+                //    }
+//
+                //    if (entity.Assertion?.Certainty != null)
+                //    {
+                //        Console.WriteLine($"    Certainty: {entity.Assertion?.Certainty}");
+                //    }
+                //    if (entity.Assertion?.Conditionality != null)
+                //    {
+                //        Console.WriteLine($"    Conditionality: {entity.Assertion?.Conditionality}");
+                //    }
+                //}
             }
 
             Console.WriteLine($"  We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
